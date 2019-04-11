@@ -6,38 +6,33 @@
             <table v-if="!isCheckoutSection" id="cart" class="table table-hover table-condensed">
                 <thead>
                     <tr>
-                        <th class="text-center" style="width: 50%">Produk</th>
+                        <th class="text-center" style="width: 75%">Produk</th>
                         <th class="text-center" style="width: 12%">Harga</th>
-                        <th class="text-center" style="width: 15%">Pengiriman</th>
                         <th class="text-center" style="width: 15%">Jumlah (ton)</th>
-                        <th class="text-center" style="width: 15%">Subtotal</th>
                         <th style="width: 5%"></th>
                     </tr>
                 </thead>
                 <tbody v-for="product in products" :key="product.id">
-                        <tr>
-                            <td data-th="Produk">
-                                <div class="row">
-                                    <div class="col-sm-3 hidden-xs">
-                                        <img class="img-responsive" src="https://via.placeholder.com/100" alt="">
-                                    </div>
-                                    <div class="col-sm-9 justify-content-center">
-                                        <h5>{{ product.name }}</h5>
-                                        <p>{{ product.deskripsi }}</p>
-                                    </div>
+                    <tr>
+                        <td data-th="Produk">
+                            <div class="row">
+                                <div class="col-sm-3 hidden-xs">
+                                    <img class="img-responsive" src="https://via.placeholder.com/100" alt="">
                                 </div>
-                            </td>
-                            <td data-th="Harga">Rp {{ product.price }}</td>
-                            <td data-th="Ongkir">Rp {{ ongkir }}</td>
-                            <td data-th="Jumlah">
-                                {{ product.quantity > 0 ?  `${product.quantity}` : ''}}
-                            </td>
-                            <td data-th="Subtotal">Rp {{ subtotal + ongkir }}</td>
-                            <td class="actions" data-th="">
-                                <button class="btn btn-warning btn-sm" @click="removeFromCart(product.id)"><font-awesome-icon icon="trash-alt" /></button> 
-                            </td>
-                        </tr>
-                    
+                                <div class="col-sm-9 justify-content-center">
+                                    <h5>{{ product.name }}</h5>
+                                    <p>{{ product.deskripsi }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-th="Harga" class="text-center">Rp {{ product.price }}</td>
+                        <td data-th="Jumlah" class="text-center">
+                            {{ product.quantity > 0 ?  `${product.quantity}` : ''}}                            
+                        </td>
+                        <td class="actions" data-th="">
+                            <button class="btn btn-warning btn-sm" @click="removeFromCart(product.id)"><font-awesome-icon icon="trash-alt" /></button> 
+                        </td>
+                    </tr>
                     <div v-if="products.length === 0">
                         <p class="justify-content-center">Keranjang Anda kosong</p>
                     </div>
@@ -45,7 +40,6 @@
                 <tfoot class="mt-2">
                     <tr>
                         <td><nuxt-link to="/catalogue"><button class="btn btn-warning">Kembali ke Katalog</button></nuxt-link></td>
-                        <td colspan="2" class="hidden-xs"></td>
                         <td class="visible-md text-right" colspan="2"><strong>Total  Rp {{ total }}</strong></td>
                         <td><button v-show="products.length > 0 && !isCheckoutSection" class="btn btn-success btn-block" @click="checkBuy">Checkout</button></td>
                     </tr>
@@ -62,10 +56,16 @@
                         <br>
                         <h6>Nomor Rekening Tujuan:</h6>
                         <h6><strong>0123456789</strong></h6>
+                        <h6><strong>PT Crowde Membangun Bangsa</strong></h6>
                         <br>
                         <h6>Nominal yang harus dibayarkan:</h6>
                         <h6><strong>Rp {{ total }}</strong></h6>
-                    </div>
+                        <br>
+                        <br>
+                        <p>Mohon kirimkan email konfirmasi pembayaran ke email
+                            <strong>info@crowde.co</strong> dengan subjek Nama Pemilik Rekening_Nomor Pemesanan
+                        </p>
+                        </div>
                 
                 </div>
 
@@ -95,9 +95,6 @@ export default {
         products() {
             return this.$store.getters.productsAdded;
         },
-        subtotal() {
-            return this.product.quantity * this.product.price;
-        },
         total() {
             let productsAdded = this.$store.getters.productsAdded,
                 pricesArray = [],
@@ -113,15 +110,17 @@ export default {
                 
                 totalPrice = pricesArray.reduce((a, b) => a + b, 0);
             return totalPrice;
-            console.log(totalPrice);
         },
-        isUserLoggedIn () {
+        isUserLoggedIn() {
 			return this.$store.getters.isUserLoggedIn;
+        },
+        isUserSignedUp() {
+            return this.$store.getters.isUserSignedUp;
         }
     },
     methods: {
         checkBuy() {
-            if(this.isUserLoggedIn) {
+            if(this.isUserLoggedIn || this.isUserSignedUp) {
                 this.isCheckoutSection = true;
             }
         },
@@ -139,7 +138,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
 
 #cart {
     margin-top: 100px;
@@ -148,7 +147,6 @@ export default {
     width: 100%;
     margin-bottom: 1rem;
     margin-top: 1rem;
-
 }
 
 img-responsive {
@@ -183,11 +181,15 @@ img-responsive {
 		display: inline-block; width: 8rem;
 	}
 	
-	
-	
 	table#cart tfoot td{display:block; }
 	table#cart tfoot td .btn{display:block;}
 	
+}
+
+.card {
+    margin-top: 100px;
+    margin-left: 350px;
+    margin-right: 350px;
 }
 
 </style>

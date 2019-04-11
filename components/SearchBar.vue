@@ -26,10 +26,10 @@ export default {
         search(value) {
             if(value.length > 0) {
                 this.$store.commit('setHasUserSearched', true);
-                this.$store.commit('setProductTitleSearched', value)
+                this.$store.commit('setProductNameSearched', value)
             } else {
                 this.$store.commit('setHasUserSearched', false);
-				this.$store.commit('setProductTitleSearched', '');
+				this.$store.commit('setProductNameSearched', '');
             }
         }
     }

@@ -58,9 +58,6 @@ export default {
     height: 100%;
     z-index: 1;
 }
-.details:hover {
-    border: 1px solid #51bafc;
-}
 
 a:hover {
     color: #4cbb7c;

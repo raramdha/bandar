@@ -1,6 +1,6 @@
 <template>
     <div>
-        <MainNavbar />
+        <TestNavbar />
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-6 mt-5">
@@ -48,11 +48,11 @@
 </template>
 
 <script>
-import MainNavbar from '~/components/MainNavbar.vue'
+import TestNavbar from '~/components/TestNavbar.vue'
 import Footer from '~/components/Footer.vue'
 export default {
     components : {
-        MainNavbar,
+        TestNavbar,
         Footer
     },
     data() {
@@ -72,11 +72,12 @@ export default {
     methods: {
         checkForm (e) {
         e.preventDefault();
-        if (this.name && this.email && this.password && this.repeatPassword) {
+        if (this.name && this.email && this.password && this.confPassword) {
             this.isFormSuccess = true;
             this.$store.commit('setUserName', this.name);
             this.$store.commit('isUserSignedUp', this.isFormSuccess);
             this.$store.commit('isUserLoggedIn', this.isFormSuccess);
+            this.$router.push( { name: 'main' });
         }
         }
     }
@@ -87,6 +88,7 @@ export default {
 label {
     float: left;
 }
+
 
     
 </style>

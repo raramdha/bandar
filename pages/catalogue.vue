@@ -4,16 +4,7 @@
         <main>
             <div class="container">
                 <div class="row mt-5">
-                    <div class="col-sm-2">
-                        <h5 class="my-4">Beranda</h5>
-                        <div class="list-group">
-                            <a href="#" class="list-group-item">Pertanian</a>
-                            <a href="#" class="list-group-item">Peternakan</a>
-                            <a href="#" class="list-group-item">Perikanan</a>
-                        </div>
-                    </div>
-                    
-                    <div class="col-sm-10">
+                    <div class="col-sm-12">
                         <div class="row mt-5 mb-5 justify-content-center"> 
                             <div class="card col-sm-3" v-for="product in products" :key="product.id">
                                 <CatalogContent :product="product" />
@@ -45,6 +36,13 @@
 </template>
 
 <script>
+function getByName(list, keyword) {
+    const search = keyword.trim().toLowerCase();
+    if(!search.length) return list;
+    return list.filter(item => item.name.toLowerCase().indexOf(search) > -1);
+}
+
+
 import TestNavbar from '~/components/TestNavbar.vue'
 import Footer from '~/components/Footer.vue'
 import CatalogContent from '~/components/CatalogContent.vue'
@@ -63,18 +61,18 @@ export default {
     computed: {
         products () {
             if (this.$store.state.userInfo.hasSearched) {
-                return this.getProductByTitle();
+                return this.getProductByName();
             } else {
                 return this.$store.state.products;
             }
         }
     },
     methods: {
-        getProductByTitle () {
+        getProductByName () {
         let listOfProducts = this.$store.state.products,
-            titleSearched = this.$store.state.userInfo.productTitleSearched;
+            nameSearched = this.$store.state.userInfo.productNameSearched;
         
-        return this.productsFiltered = getByTitle(listOfProducts, titleSearched);
+        return this.productsFiltered = getByName(listOfProducts, nameSearched);
         }
     }
 }

@@ -22,7 +22,7 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <nuxt-link to="/checkout" tag="li">
-                    <a href="#" class="nav-link nav-link-icon text-white" target="_blank">
+                    <a href="#" class="nav-link nav-link-icon text-white">
                         <span><font-awesome-icon icon="shopping-cart"/></span>
                         <span :class="[numProductsAdded > 0 ? 'badge badge-light' : '']">{{ numProductsAdded }}</span>
                     </a>
@@ -38,8 +38,8 @@
                         <template slot="button-content">
                         <font-awesome-icon icon="user-circle" class="text-white"/>
                         <span class="text-white">{{ getUsername }}</span></template>
-                        <b-dropdown-item><nuxt-link to="/dashboards">Dashboard</nuxt-link></b-dropdown-item>
-                        <b-dropdown-item href="#">Logout</b-dropdown-item>
+                        <b-dropdown-item><nuxt-link to="/dashboard">Dashboard</nuxt-link></b-dropdown-item>
+                        <b-dropdown-item @click="logout">Logout</b-dropdown-item>
                     </b-dropdown>
                 </li>
             </ul>
@@ -68,6 +68,13 @@ export default {
         },
         numProductsAdded () {
         return this.$store.getters.productsAdded.length;
+        }
+    },
+    methods: {
+        logout() {
+            this.$store.commit('isUserLoggedIn', false);
+            this.$store.commit('isUserSignedUp', false);
+            this.$router.push( { name: 'test' });
         }
     }
 }

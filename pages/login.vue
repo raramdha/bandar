@@ -1,6 +1,6 @@
 <template>
     <div>
-        <MainNavbar />
+        <TestNavbar />
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-6 mt-5">
@@ -39,10 +39,9 @@
                          </div>
                     </div>
                 </div>
-                <nuxt-link to="/test"><div v-if="isUserLoggedIn" class="alert alert-success" role="alert">
+                <div v-if="isUserLoggedIn" class="alert alert-success" role="alert">
                     Login berhasil!
                 </div>
-                </nuxt-link>
             </div>
         </div>
         <Footer />
@@ -50,11 +49,11 @@
 </template>
 
 <script>
-import MainNavbar from '~/components/MainNavbar.vue'
+import TestNavbar from '~/components/TestNavbar.vue'
 import Footer from '~/components/Footer.vue'
 export default {
     components : {
-        MainNavbar,
+        TestNavbar,
         Footer
     },
     data() {
@@ -76,6 +75,7 @@ export default {
             if(this.email && this.password) {
                 this.isFormSuccess = true;
                 this.$store.commit('isUserLoggedIn', this.isFormSuccess);
+                this.$router.push( { name: 'main' });
             }
         }
     }

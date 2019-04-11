@@ -9,7 +9,7 @@ export const state = () => ({
             deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             isAddedToCart: false,
             isAddedBtn: false,
-            quantity: 50
+            quantity: 1
         },
         {
             id: 2,
@@ -20,7 +20,7 @@ export const state = () => ({
             deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             isAddedToCart: false,
             isAddedBtn: false,
-            quantity: 50
+            quantity: 1
         },
         {
             id: 3,
@@ -31,7 +31,7 @@ export const state = () => ({
             deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             isAddedToCart: false,
             isAddedBtn: false,
-            quantity: 50
+            quantity: 1
         },
         {
             id: 4,
@@ -42,18 +42,18 @@ export const state = () => ({
             deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             isAddedToCart: false,
             isAddedBtn: false,
-            quantity: 50
+            quantity: 1
         },
         {
             id: 5,
-            name: "Apel",
-            category: "Pertanian",
-            location: "Malang",
+            name: "Ayam",
+            category: "Peternakan",
+            location: "Bogor",
             price: 100000,
             deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             isAddedToCart: false,
             isAddedBtn: false,
-            quantity: 50
+            quantity: 1
         },
         {
             id: 6,
@@ -64,7 +64,7 @@ export const state = () => ({
             deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             isAddedToCart: false,
             isAddedBtn: false,
-            quantity: 50
+            quantity: 1
         },
         {
             id: 7,
@@ -75,7 +75,7 @@ export const state = () => ({
             deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             isAddedToCart: false,
             isAddedBtn: false,
-            quantity: 50
+            quantity: 1
         },
         {
             id: 8,
@@ -86,7 +86,7 @@ export const state = () => ({
             deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             isAddedToCart: false,
             isAddedBtn: false,
-            quantity: 50
+            quantity: 1
         },
         {
             id: 9,
@@ -97,7 +97,7 @@ export const state = () => ({
             deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             isAddedToCart: false,
             isAddedBtn: false,
-            quantity: 50
+            quantity: 1
         },
         {
             id: 10,
@@ -108,18 +108,18 @@ export const state = () => ({
             deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             isAddedToCart: false,
             isAddedBtn: false,
-            quantity: 50
+            quantity: 1
         },
         {
             id: 11,
-            name: "Tomat",
-            category: "Pertanian",
-            location: "Malang",
+            name: "Udang",
+            category: "Perikanan",
+            location: "Cirebon",
             price: 100000,
             deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             isAddedToCart: false,
             isAddedBtn: false,
-            quantity: 50
+            quantity: 1
         },
         {
             id: 12,
@@ -130,7 +130,7 @@ export const state = () => ({
             deskripsi: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
             isAddedToCart: false,
             isAddedBtn: false,
-            quantity: 50
+            quantity: 1
         }
         ],
         userInfo: {
@@ -138,10 +138,10 @@ export const state = () => ({
             isSignedUp: false,
             hasSearched: false,
             name: '',
-            productTitleSearched: ''
+            productNameSearched: ''
         }
         
-    })
+})
 
 export const getters = {
         productsAdded: state => {
@@ -163,8 +163,12 @@ export const getters = {
         },
         quantity: state => {
             return state.products.quantity; 
-        }
-    }
+        },
+        pertanian: state => filter(state.products, 'category', 'Pertanian'),
+        peternakan: state => filter(state.products, 'category', 'Peternakan'),
+        perikanan: state => filter(state.products, 'category', 'Perikanan'),
+}
+
 export const mutations = {
         addToCart: (state, id) => {
             state.products.forEach(el => {
@@ -199,8 +203,8 @@ export const mutations = {
         setUserName: (state, name) => {
             state.userInfo.name = name;
         },
-        setProductTitleSearched: (state, titleSearched) => {
-            state.userInfo.productTitleSearched = titleSearched;
+        setProductNameSearched: (state, nameSearched) => {
+            state.userInfo.productNameSearched = nameSearched;
         },
         quantity: (state, data) => {
             state.products.forEach(el => {

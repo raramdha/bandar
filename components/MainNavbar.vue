@@ -1,12 +1,10 @@
 <template>
-    <nav class="navbar navbar-expand-md fixed-top navbar-transparent">
+    <nav class="navbar navbar-expand-md fixed-top navbar-transparent" ref="navbar-color">
         <nuxt-link to="/test">
             <a class="navbar-brand text-white" href="#">Bandar</a>
         </nuxt-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon">
-                    <font-awesome-icon icon="bars"/>
-                </span>
+                <span class="navbar-toggler-icon"></span>
             </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -28,7 +26,7 @@
                 <nuxt-link to="/checkout" tag="li">
                     <a href="#" class="nav-link nav-link-icon text-white">
                         <span><font-awesome-icon icon="shopping-cart"/></span>
-                        <span :class="[numProductsAdded > 0 ? 'badge badge-light' : '']">{{ numProductsAdded }}</span>
+                        <span :class="[numProductsAdded > 0 ? 'badge badge-warning' : '']">{{ numProductsAdded }}</span>
                     </a> 
                 </nuxt-link>
                 <nuxt-link to="/signup" tag="li">
@@ -42,7 +40,7 @@
                         <template slot="button-content">
                         <font-awesome-icon icon="user-circle" class="text-white"/>
                         <span class="text-white">{{ getUsername }}</span></template>
-                        <b-dropdown-item><nuxt-link to="/dashboards">Dashboard</nuxt-link></b-dropdown-item>
+                        <b-dropdown-item><nuxt-link to="/dashboard">Dashboard</nuxt-link></b-dropdown-item>
                         <b-dropdown-item href="#">Logout</b-dropdown-item>
                     </b-dropdown>
                 </li>
@@ -51,8 +49,26 @@
     </nav>
 </template>
 
-<script>
+<script> 
+let resizeTimeout;
+function resizeThrottler(actualResizeHandler) {
+  // ignore resize events as long as an actualResizeHandler execution is in the queue
+  if (!resizeTimeout) {
+    resizeTimeout = setTimeout(() => {
+      resizeTimeout = null;
+      actualResizeHandler();
+
+      // The actualResizeHandler will execute at a rate of 15fps
+    }, 66);
+  }
+}
+
 export default {
+    data() {
+        return {
+            lastKnownScrollPosition: 0,
+        }
+    },
     computed: {
         isUserLoggedIn() {
             return this.$store.getters.isUserLoggedIn;
@@ -69,11 +85,42 @@ export default {
         numProductsAdded() {
              return this.$store.getters.productsAdded.length;
         }
+    },
+    methods: {
+        handleScroll() {
+            const newBg = 'navbar-green';
+            let colorNavbar = this.$refs['navbar-color'];
+
+            if(process.browser) {
+                if(window.scrollY > 500) {
+                    colorNavbar.classList.add(newBg);
+                } else {
+                    colorNavbar.classList.remove(newBg);
+                }
+            }
+        },
+        scrollListener() {
+            resizeThrottler(this.handleScroll);
+        }
+        
+    },
+    created() {
+        if(process.browser) {
+            window.addEventListener('scroll', this.scrollListener);
+        }
+    },
+    mounted() {
+        this.handleScroll();
+    },
+    destroyed() {
+        if(process.browser) {
+            window.removeEventListener('scroll', this.scrollListener);
+        }
     }
 }
 </script>
 
-<style>
+<style scoped>
 .navbar-transparent {
     background-color: transparent;
 }
@@ -83,6 +130,7 @@ export default {
     align-items: center;
 }
 
-
-    
+.navbar-green {
+    background-color: #098840;
+}
 </style>

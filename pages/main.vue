@@ -10,7 +10,7 @@
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                 Nostrum, tempore?
                             </h4>
-                            <a href="#" class="btn btn-success" role="button">Pesan Sekarang</a>
+                            <a href="/catalogue" class="btn btn-success" role="button">Pesan Sekarang</a>
                         </div>
                     </div>
                 </div>
@@ -123,7 +123,7 @@ export default {
 }
 
 .hero {
-    background-image: url("https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80");
+    background-image: url("https://images.unsplash.com/photo-1452948491233-ad8a1ed01085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1053&q=80");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

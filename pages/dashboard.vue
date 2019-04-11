@@ -9,7 +9,7 @@
             </div>
             <div class="col-sm-9">
                 <div class="row mt-5">
-                    <h5>PT Nama Perusahaan</h5>
+                    <h5 v-if="isUserSignedUp">PT {{ getUserName }}</h5>
                 </div>
                 <tabs>
                     <tab name="Detail Pesanan" :selected="true">
@@ -121,11 +121,23 @@ export default {
                 finishDate: "14-02-2019 16:16"
             }]
         }
+    },
+    computed: {
+        isUserSignedUp() {
+            return this.$store.getters.isUserSignedUp;
+        },
+        isUserLoggedIn() {
+            return this.$store.getters.isUserLoggedIn;
+        },
+        getUserName () {
+			let name = this.$store.getters.getUserName;
+			return name;
+        }
     }
 }
 </script>
 
-<style>
+<style scoped>
 
 
 .main {

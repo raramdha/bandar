@@ -35,9 +35,8 @@
                                     <dl class="param param-inline">
                                         <dt>Jumlah (ton): </dt>
                                         <dd>
-                                            <select @change="onSelectQuantity(product.id)" v-model="selected">
-                                                <option v-for="quantity in quantityArray" :value="quantity">{{ quantity }}</option>
-                                            </select>
+                                            <input type="number" class="form-control text-center mt-2"
+                                            :value="quantity" @input="onSelectQuantity(product.id)" min="0">
                                         </dd>
                                     </dl>
                                 </div>
@@ -50,7 +49,7 @@
                                     </dl>
                                 </div>
                             </div>
-                            <nuxt-link to="/checkout"><button class="btn btn-success mr-4"> Pesan Sekarang </button></nuxt-link>
+                            <nuxt-link to="/checkout"><button class="btn btn-success mr-4" @click="addToCart(product.id)"> Pesan Sekarang </button></nuxt-link>
                             <button class="btn btn-success"  @click="addToCart(product.id)"> Tambahkan ke Keranjang </button>
                         </article>
                     </aside>
@@ -76,17 +75,11 @@ export default {
     data() {
         return {
             product: {},
-            quantityArray: [],
-            selected: 1
         }
     },
     mounted() {
         this.product = this.$store.getters.getProductById(this.$route.params.id);
         this.selected = this.product.quantity;
-
-        for (let i = 1; i <= 20; i++) {
-            this.quantityArray.push(i);
-        }
     },
     computed: {
         isAddedBtn () {
@@ -105,7 +98,7 @@ export default {
         onSelectQuantity(id) {
             let data = {
                 id: id,
-                quantity: this.selected
+                quantity: parseInt(event.target.value)
             }
             this.$store.commit('quantity', data);
         }
