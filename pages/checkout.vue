@@ -106,9 +106,8 @@ export default {
 					quantity = product.quantity;
 				}
 				pricesArray.push((product.price * quantity));
-                });
-                
-                totalPrice = pricesArray.reduce((a, b) => a + b, 0);
+            });
+            totalPrice = pricesArray.reduce((a, b) => a + b, 0);
             return totalPrice;
         },
         isUserLoggedIn() {

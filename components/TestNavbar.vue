@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-md fixed-top navbar-light">
-        <nuxt-link to="/test">
+        <nuxt-link to="/main">
             <a class="navbar-brand text-white" href="#">Bandar</a>
         </nuxt-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
